@@ -19,7 +19,6 @@ class Ticker
     timer()
 
   setFps: ( _fps )->
-    console.log _fps
     fps = _fps
     interval = 1000 / _fps
 
