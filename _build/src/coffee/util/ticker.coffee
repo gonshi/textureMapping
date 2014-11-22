@@ -15,10 +15,11 @@ class Ticker
   prevSecondTime = now
 
   constructor: ->
-    @setFps 60
+    @setFps 30
     timer()
 
   setFps: ( _fps )->
+    console.log _fps
     fps = _fps
     interval = 1000 / _fps
 
@@ -40,7 +41,7 @@ class Ticker
 
     for i of listeners
       listeners[ i ] data
-    setTimeout timer, @interval
+    setTimeout timer, interval
 
 getInstance = ->
   if !instance
