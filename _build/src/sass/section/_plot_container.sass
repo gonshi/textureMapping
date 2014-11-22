@@ -1,0 +1,17 @@
+#wrapper
+  #plot_container
+    position: absolute
+    +trbl( 0, 0, 0, 0 )
+    width: $plotContainer_size 
+    height: $plotContainer_size 
+    margin: auto
+
+    .plot
+      $size: 15px
+      position: absolute
+      width: $size 
+      height: $size 
+      background: $blue 
+      border-radius: 50%
+      cursor: pointer
+      +translate( $size * -0.5, $size * -0.5 )

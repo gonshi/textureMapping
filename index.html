@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:description" content="">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image:src" content="">
+    <meta name="viewport" content="width=640">
+    <link rel="stylesheet" href="css/main.css" media="screen, print">
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico"><!--[if lte IE 9]>
+    <script src="js/lib/html5shiv.js"></script><![endif]-->
+  </head>
+  <body>
+    <div id="wrapper">
+      <canvas id="canvas"></canvas>
+      <div id="plot_container"></div>
+      <form id="setPlot">横
+        <input type="number" value="9" class="width">縦
+        <input type="number" value="6" class="height">
+        <input type="submit" value="設定" class="submit">
+      </form>
+    </div>
+    <div id="fb-root"></div>
+    <script>
+    (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/ja_JP/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+    window.twttr = (function (d,s,id) {
+     var t, js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) return;
+       js=d.createElement(s);
+       js.id=id;
+       js.src="https://platform.twitter.com/widgets.js";
+       fjs.parentNode.insertBefore(js, fjs);
+       return window.twttr || (t = {
+         _e: [],
+         ready: function(f){
+           t._e.push(f)
+         }
+       });
+    }(document, "script", "twitter-wjs"));
+    </script>
+    <script src="js/app.min.js"></script>
+  </body>
+</html>
