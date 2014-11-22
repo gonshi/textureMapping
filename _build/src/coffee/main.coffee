@@ -1,3 +1,9 @@
+###!
+  main function
+###
+
+
+
 $ = require "jquery"
 Ticker = require "./util/ticker"
 ClickHandler = require "./controller/clickHandler"
