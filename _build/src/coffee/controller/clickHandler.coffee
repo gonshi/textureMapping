@@ -60,8 +60,8 @@ class ClickHandler extends EventDispatcher
       $( "#setting .setPlot .height" ).val()
 
   setEffect: ->
-    $( "#setting .grayScale button" ).on "click", =>
-      @dispatch "SET_GRAYSCALE", @
+    $( "#setting .effect button" ).on "click", ( e )=>
+      @dispatch "SET_EFFECT", @, e.target.className
 
   setPlotOffset: ->
     @offset = []

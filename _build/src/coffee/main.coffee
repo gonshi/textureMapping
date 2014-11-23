@@ -120,14 +120,19 @@ $ ->
     _init()
     clickHandler.setPlotOffset()
 
-  clickHandler.listen "SET_GRAYSCALE", ->
-    canvas_img.src = effect.grayScale canvas_img,
-                                      plotContainer_width,
-                                      plotContainer_height
+  clickHandler.listen "SET_EFFECT", ( effect_type )->
+    if effect_type == "grayScale"
+      canvas_img.src = effect.grayScale canvas_img,
+                                        plotContainer_width,
+                                        plotContainer_height
+    else if effect_type == "mosaic"
+      canvas_img.src = effect.mosaic canvas_img,
+                                     plotContainer_width,
+                                     plotContainer_height
+
     texture_max = texture.length - 1
     for i in [ 0..texture_max ]
       texture[ i ].setImg canvas_img
-
 
   # PRIVATE
   _draw = ()->

@@ -25,13 +25,24 @@
           @extend %hoverEffect
           @extend %activeEffect
 
-    .effect
+    .effect_container
       margin-top: 10px
+      +clearfix
 
-      button 
-        padding: 5px
-        color: #fff
-        background: $blue
-        border-radius: 5px
-        @extend %hoverEffect
-        @extend %activeEffect
+      .effect
+        float: left
+        margin: 0 12.5px
+
+        &:first-child
+          margin-left: 0
+        &:last-child
+          margin-right: 0
+
+        button 
+          width: 150px
+          padding: 5px
+          color: #fff
+          background: $blue
+          border-radius: 5px
+          @extend %hoverEffect
+          @extend %activeEffect
