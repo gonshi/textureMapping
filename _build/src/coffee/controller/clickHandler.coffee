@@ -17,7 +17,7 @@ class ClickHandler extends EventDispatcher
     def_translate = parseInt( $( "#plot_container .plot" ).
                     css( "transform" ).
                     split( "," )[ 5 ] )
-    @setOffset()
+    @setPlotOffset()
 
     $ document
       .on "mousedown touchstart", "#plot_container .plot", ( e )=>
@@ -52,14 +52,18 @@ class ClickHandler extends EventDispatcher
       x: posX
       y: posY
 
-  submit: ->
-    $( "#setPlot .submit" ).on "click", ( e )=>
+  resetPlot: ->
+    $( "#setting .setPlot .submit" ).on "click", ( e )=>
       e.preventDefault()
       @dispatch "RESET_PLOT", @,
-      $( "#setPlot .width" ).val(),
-      $( "#setPlot .height" ).val()
+      $( "#setting .setPlot .width" ).val(),
+      $( "#setting .setPlot .height" ).val()
 
-  setOffset: ->
+  setEffect: ->
+    $( "#setting .grayScale button" ).on "click", =>
+      @dispatch "SET_GRAYSCALE", @
+
+  setPlotOffset: ->
     @offset = []
     _length = $plotContainer.find( ".plot" ).size() - 1
     plotContainer_offset_x = $plotContainer.offset().left

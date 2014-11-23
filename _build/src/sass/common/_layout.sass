@@ -6,28 +6,3 @@
   body.sp &
     position: fixed
     width: 100%
-
-  #setPlot
-    position: absolute
-    font-size: 18px
-    +trbl( 50px, 0, auto, 0 )
-    width: $plotContainer_size
-    margin: auto
-
-    input
-      width: calc(#{$plotContainer_size} / 2 - 3em)
-      padding: 5px
-      border: 1px solid #ccc
-      border-radius: 5px
-
-      &:first-child
-        margin-right: 2em
-      &.submit
-        width: $plotContainer_size
-        margin-top: 20px
-        color: #fff 
-        background: $blue
-        border: none
-        cursor: pointer
-        @extend %hoverEffect
-        @extend %activeEffect

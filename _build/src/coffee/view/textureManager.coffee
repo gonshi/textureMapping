@@ -1,10 +1,10 @@
 ###
-  0----1
-  |    |
-  |    |
-  3----2
- * origin_x: plotcontainer x
- * origin_y: plotcontainer y
+0----1
+|    |
+|    |
+3----2
+* origin_x: plotcontainer x
+* origin_y: plotcontainer y
 ###
 
 class TextureManager
@@ -17,15 +17,14 @@ class TextureManager
       @p_def[ i ] = {}
       @p_cur[ i ] = {}
       @p_def[ i ].x = @p_cur[ i ].x =
-                      obj[ "x_#{i}" ]
+        obj[ "x_#{i}" ]
       @p_def[ i ].y = @p_cur[ i ].y =
-                      obj[ "y_#{i}" ]
+        obj[ "y_#{i}" ]
 
     @p_offset.x = obj.x_0 - obj.origin_x
     @p_offset.y = obj.y_0 - obj.origin_y
     @context = obj.context
-    @img = new Image()
-    @img.src = obj.img
+    @img = obj.img
     @size_x = obj.size_x
     @size_y = obj.size_y
 
@@ -73,9 +72,9 @@ class TextureManager
     @p_cur[ plot ].y = @p_def[ plot ].y + diff.y
 
   ###
-    For resize Handler.
-    Because the plot might be already moved since second time.
-    the value of x and y would be different from the default value.
+  For resize Handler.
+  Because the plot might be already moved since second time.
+  the value of x and y would be different from the default value.
   ###
   setOffset: ( obj )->
     @p_def[ 0 ].x = obj.x
@@ -89,5 +88,8 @@ class TextureManager
 
     @p_offset.x = obj.x - obj.origin_x
     @p_offset.y = obj.y - obj.origin_y
+
+  setImg: ( img )->
+    @img = img
 
 module.exports = TextureManager

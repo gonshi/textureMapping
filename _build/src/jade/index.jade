@@ -5,9 +5,13 @@ block body
   div#wrapper
     canvas#canvas
     div#plot_container
-    form#setPlot
-      |横
-      input.width(type="number" value="9")
-      |縦
-      input.height(type="number" value="6")
-      input.submit(type="submit" value="設定")
+    div#setting
+      form.setPlot
+        |横
+        input.width(type="number" value="9")
+        |縦
+        input.height(type="number" value="6")
+        input.submit(type="submit" value="プロット数を変更")
+      div.effect
+        p.grayScale
+          button グレースケールに変換

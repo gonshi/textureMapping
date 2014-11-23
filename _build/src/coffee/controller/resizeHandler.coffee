@@ -2,6 +2,8 @@ $ = require "jquery"
 EventDispatcher = require "../util/eventDispatcher"
 Throttle = require "../util/throttle"
 
+instance = null
+
 class ResizeHandler extends EventDispatcher
   constructor: ->
     super()

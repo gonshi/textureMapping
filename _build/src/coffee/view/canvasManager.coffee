@@ -1,20 +1,27 @@
 $ = require "jquery"
-$canvas = $( "#canvas" )
+canvas = $( "#canvas" ).get( 0 )
+instance = null
 
 class CanvasManager
   constructor: ->
-    if !$canvas.get( 0 ).getContext
+    if !canvas.getContext
       alert "This browser doesn\'t supoort HTML5 Canvas."
       return undefined
 
-    @context = $canvas.get( 0 ).getContext( "2d" )
+    @context = canvas.getContext( "2d" )
 
   resetContext: ( width, height )->
-    $canvas.get( 0 ).width = width
-    $canvas.get( 0 ).height = height
+    canvas.width = width
+    canvas.height = height
 
   clear: ( width, height )->
     @context.clearRect 0, 0, width, height
+
+  createImage: ( width, height )->
+    @context.createImageData( width, height )
+
+  getImage: ( x, y, width, height )->
+    @context.getImageData( x, y, width, height )
 
   getContext: ->
     @context

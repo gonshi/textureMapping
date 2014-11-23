@@ -1,15 +1,13 @@
 ###!
-  main function
+main function
 ###
-
-
-
 $ = require "jquery"
 Ticker = require "./util/ticker"
 ClickHandler = require "./controller/clickHandler"
 ResizeHandler = require "./controller/resizeHandler"
 CanvasManager = require "./view/canvasManager"
 TextureManager = require "./view/textureManager"
+effect = require "./view/effect"
 
 # main
 $ ->
@@ -19,17 +17,22 @@ $ ->
   canvasManager = CanvasManager()
   ua_lower = window.navigator.userAgent.toLowerCase()
   texture = []
+  canvas_img= new Image()
+  canvas_img.src = "http://jsrun.it/assets/w/s/V/H/wsVHu.png"
+
   $plotContainer = $( "#plot_container" )
   plotContainer_width = $plotContainer.width()
   plotContainer_height = $plotContainer.height()
-  plot_width_size = parseInt( $( "#setPlot .width" ).val() )
-  plot_height_size = parseInt( $( "#setPlot .height" ).val() )
+  plot_width_size = parseInt( $( "#setting .setPlot .width" ).val() )
+  plot_height_size = parseInt( $( "#setting .setPlot .height" ).val() )
+
   width_interval = 0
   height_interval = 0
-  numExp = /.*?num(.*?)$/
   wrapper_width = 0
   wrapper_height = 0
   def_translate = 0
+
+  numExp = /.*?num(.*?)$/
 
   if !window._DEBUG?
     window._DEBUG = state: false
@@ -47,26 +50,25 @@ $ ->
                                ( wrapper_height = $( "#wrapper" ).height() )
     _setTexture()
     # set texture offset
-    plot_max = plot_width_size * ( plot_height_size - 1 ) - 1
+    texture_max = texture.length - 1
     plotContainer_offset_x = $plotContainer.offset().left
     plotContainer_offset_y = $plotContainer.offset().top
-    texture_num = 0
-    for i in [ 0..plot_max ]
-      if ( i + 1 ) % plot_width_size != 0 # not the rightest plot
-        num = ( "00" + i ).slice -2
-        texture[ texture_num ].setOffset
-          x: plotContainer_offset_x +
-             parseFloat( $plotContainer.find( ".num#{ num }" ).
-             css( "left" ) )
-          y: plotContainer_offset_y +
-             parseFloat( $plotContainer.find( ".num#{ num }" ).
-             css( "top" ) )
-          width_interval: width_interval
-          height_interval: height_interval
-          origin_x: $plotContainer.offset().left
-          origin_y: $plotContainer.offset().top
-        texture_num += 1
-    clickHandler.setOffset()
+    for i in [ 0..texture_max ]
+      _plot_num = parseInt( i / ( plot_width_size - 1 ) ) *
+                  plot_width_size + i % ( plot_width_size - 1 )
+      plot_num = ( "00" + _plot_num ).slice -2
+      texture[ i ].setOffset
+        x: plotContainer_offset_x +
+            parseFloat( $plotContainer.find( ".num#{ plot_num }" ).
+            css( "left" ) )
+        y: plotContainer_offset_y +
+            parseFloat( $plotContainer.find( ".num#{ plot_num }" ).
+            css( "top" ) )
+        width_interval: width_interval
+        height_interval: height_interval
+        origin_x: $plotContainer.offset().left
+        origin_y: $plotContainer.offset().top
+    clickHandler.setPlotOffset()
 
   ticker.listen ()->
     _draw()
@@ -116,7 +118,16 @@ $ ->
     plot_width_size = parseInt( width )
     plot_height_size = parseInt( height )
     _init()
-    clickHandler.setOffset()
+    clickHandler.setPlotOffset()
+
+  clickHandler.listen "SET_GRAYSCALE", ->
+    canvas_img.src = effect.grayScale canvas_img,
+                                      plotContainer_width,
+                                      plotContainer_height
+    texture_max = texture.length - 1
+    for i in [ 0..texture_max ]
+      texture[ i ].setImg canvas_img
+
 
   # PRIVATE
   _draw = ()->
@@ -128,7 +139,7 @@ $ ->
         texture[ texture_num ].drawImage()
         texture_num += 1
 
-  _setPlot = ()->
+  _putPlot = ()->
     $( "#plot_container .plot" ).remove()
     width_interval = plotContainer_width / ( plot_width_size - 1 )
     height_interval = plotContainer_height / ( plot_height_size - 1 )
@@ -140,7 +151,7 @@ $ ->
             top: parseInt( plot_num / plot_width_size ) * height_interval
             left: plot_num % plot_width_size * width_interval
           .appendTo "#plot_container"
-  
+
   _setTexture = ()->
     texture = []
     plot_max = plot_width_size * ( plot_height_size - 1 ) - 1
@@ -162,25 +173,24 @@ $ ->
           origin_x: $plotContainer.offset().left
           origin_y: $plotContainer.offset().top
           context: canvasManager.getContext()
-          img: jsdoit_img
+          img: canvas_img
           size_x: $plotContainer.width()
           size_y: $plotContainer.height()
 
   _init = ()->
-    _setPlot()
+    _putPlot()
     def_translate = parseInt( $( "#plot_container .plot" ).css( "transform" ).
                     split( "," )[ 5 ] )
     _setTexture()
 
   # INIT
   if window.DEBUG.state
-    jsdoit_img = "img/common/jsdoit.png"
-  else
-    jsdoit_img = "http://jsrun.it/assets/w/s/V/H/wsVHu.png"
+    canvas_img.src = "img/common/jsdoit.png"
 
   canvasManager.resetContext wrapper_width = $( "#wrapper").width(),
                              wrapper_height = $( "#wrapper" ).height()
   _init()
   clickHandler.plot()
-  clickHandler.submit()
+  clickHandler.resetPlot()
+  clickHandler.setEffect()
   resizeHandler.exec()

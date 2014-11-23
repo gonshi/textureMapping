@@ -1,3 +1,5 @@
+instance = null
+
 class Ticker
   data = {}
   fps_counter = 0
