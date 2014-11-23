@@ -129,6 +129,10 @@ $ ->
       canvas_img.src = effect.mosaic canvas_img,
                                      plotContainer_width,
                                      plotContainer_height
+    else if effect_type == "blur"
+      canvas_img.src = effect.blur canvas_img,
+                                   plotContainer_width,
+                                   plotContainer_height
 
     texture_max = texture.length - 1
     for i in [ 0..texture_max ]

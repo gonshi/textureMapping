@@ -42,8 +42,8 @@ effect.mosaic = ( img, width, height )->
   mosaic_block_num = 25
   mosaic_width = width / mosaic_block_num
   mosaic_height = height / mosaic_block_num
-  for block_x in [ 0..mosaic_block_num - 1 ]
-    for block_y in [ 0..mosaic_block_num - 1 ]
+  for block_y in [ 0..mosaic_block_num - 1 ]
+    for block_x in [ 0..mosaic_block_num - 1 ]
       imgData = context.getImageData block_x * mosaic_width,
                                      block_y * mosaic_height,
                                      mosaic_width, mosaic_height
@@ -77,6 +77,43 @@ effect.mosaic = ( img, width, height )->
 
   context.putImageData whole_imgData, 0, 0
   output.mosaic.toDataURL()
+
+# BLUR
+effect.blur = ( img, width, height )->
+  if output.blur?
+    return output.blur.toDataURL()
+
+  output.blur = makeCanvas( width, height )
+  context = output.blur.getContext "2d"
+  context.drawImage( img, 0, 0, width, height )
+
+  imgData = context.getImageData 0, 0, width, height
+  pixelData = imgData.data
+
+  rgba = [ "red", "green", "blue", "alpha" ]
+  rgba_length = rgba.length
+
+  conv_r = 4 # amount of convolution pixel around the target
+  conv_total = Math.pow( conv_r * 2 + 1, 2 )
+
+  for y in [ 0..height - 1 ]
+    for x in [ 0..width - 1 ]
+
+      pixel = ( y * 4 * width ) + x * 4
+
+      for param in [ 0..rgba_length - 1 ]
+        conv_sum = 0
+
+        for conv_y in [ -conv_r..conv_r ]
+          for conv_x in [ -conv_r..conv_r ]
+            if pixelData[ pixel + ( conv_y * 4 * width ) + conv_x * 4 ]?
+              conv_sum += pixelData[ pixel +
+                                     ( conv_y * 4 * width ) +
+                                     conv_x * 4 + param ]
+        pixelData[ pixel + param ] = conv_sum / conv_total
+
+  context.putImageData imgData, 0, 0
+  output.blur.toDataURL()
 
 makeCanvas = ( width, height )->
   canvas = $( "<canvas>" ).get( 0 )
