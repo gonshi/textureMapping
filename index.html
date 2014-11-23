@@ -26,11 +26,24 @@
     <div id="wrapper">
       <canvas id="canvas"></canvas>
       <div id="plot_container"></div>
-      <form id="setPlot">横
-        <input type="number" value="9" class="width">縦
-        <input type="number" value="6" class="height">
-        <input type="submit" value="設定" class="submit">
-      </form>
+      <div id="setting">
+        <form class="setPlot">横
+          <input type="number" value="9" class="width">縦
+          <input type="number" value="6" class="height">
+          <input type="submit" value="プロット数を変更" class="submit">
+        </form>
+        <div class="effect_container">
+          <p class="effect">
+            <button class="grayScale">グレースケール</button>
+          </p>
+          <p class="effect">
+            <button class="mosaic">モザイク</button>
+          </p>
+          <p class="effect">
+            <button class="blur">ぼかし </button>
+          </p>
+        </div>
+      </div>
     </div>
     <div id="fb-root"></div>
     <script>
