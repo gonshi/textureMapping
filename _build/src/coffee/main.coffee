@@ -18,7 +18,8 @@ $ ->
   ua_lower = window.navigator.userAgent.toLowerCase()
   texture = []
   canvas_img= new Image()
-  canvas_img.src = "http://jsrun.it/assets/w/s/V/H/wsVHu.png"
+  #canvas_img.src = "http://jsrun.it/assets/w/s/V/H/wsVHu.png"
+  canvas_img.src = "img/common/jsdoit.png"
 
   $plotContainer = $( "#plot_container" )
   plotContainer_width = $plotContainer.width()
